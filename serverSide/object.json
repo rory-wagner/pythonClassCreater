@@ -2,7 +2,7 @@
     "mDictionary": {
         "dictNumber": 42
     },
-    "mList": [0, 1, 2],
+    "mList": [0, 1, 2, {"Number":[1,24,3]}],
     "mString": "Hello World",
     "mNum": 65,
     "bool" : false,
