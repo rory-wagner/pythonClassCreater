@@ -1,7 +1,17 @@
-var browsebutton = document.Selector("#filefind")
+var browsebutton = document.querySelector("#fileFinder");
 browsebutton.onclick = function(){
-	var inputFile = browsebutton.value.getJSON()
 
+	$.getJSON( browsebutton, function( data ) {
+		var items = [];
+		$.each( data, function( key, val ) {
+		  items.push( "<li id='" + key + "'>" + val + "</li>" );
+		});
+	   
+		$( "<ul/>", {
+		  "class": "my-new-list",
+		  html: items.join( "" )
+		}).appendTo( "body" );
+	  });
 
 	fetch("http://localhost:8080/files", {
 			method: "POST",
@@ -11,9 +21,8 @@ browsebutton.onclick = function(){
 			}
 
 		}).then(function(response){
-				console.log("Server Responed")
+			console.log("Server Responed")
 
-			});
-	}
-};
+		});
+}
 
