@@ -1,11 +1,19 @@
-G_OBJECT = {
-    "mDictionary": {
-        "dictNumber": 42
-    },
-    "mList": [0, 1, 2],
-    "mString": "Hello World",
-    "mNum": 65
-}
+# G_OBJECT = {
+#     "mDictionary": {
+#         "dictNumber": 42
+#     },
+#     "mList": [0, 1, 2],
+#     "mString": "Hello World",
+#     "mNum": 65,
+#     "bool" : False,
+#     "null": null
+# }
+
+import jsonToPyDict
+
+G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
+
+print(G_OBJECT)
 
 def parseTheData(jsonObject):
     className = createClassName()

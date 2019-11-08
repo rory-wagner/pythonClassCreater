@@ -7,4 +7,4 @@ def jsonToPyDict(filename):
     return jsonLoad
     
   
-jsonToPyDict("object.json") 
+print(jsonToPyDict("object.json") )

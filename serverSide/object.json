@@ -4,5 +4,7 @@
     },
     "mList": [0, 1, 2],
     "mString": "Hello World",
-    "mNum": 65
+    "mNum": 65,
+    "bool" : false,
+    "null": null
 }
