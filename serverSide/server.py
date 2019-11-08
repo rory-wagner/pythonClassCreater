@@ -1,23 +1,34 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import parseTheJSON
 import jsonToPyDict
+import json
 
 class MyRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
+        print("someone trying to get.")
         if self.path == "/files":
-            pass
+            #send the link to the file here.
+            self.send200()
         else:
             self.send404()
         return
 
     def do_POST(self):
-        if self.path == "/files":
+        if self.path == "/python":
             self.createPythonFile()
-            self.send200()
+            self.send201()
+        elif self.path == "/c++":
+            self.createCppFile()
+            self.send201()
         else:
             self.send404()
         return
+
+    def send201(self):
+        self.send_response(201)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
 
     def send200(self):
         self.send_response(200)
@@ -35,6 +46,10 @@ class MyRequestHandler(BaseHTTPRequestHandler):
     def createPythonFile(self):
         jsonObject = jsonToPyDict.jsonToPyDict("object.json")
         parseTheJSON.parseTheData(jsonObject)
+
+    def createCppFile(self):
+
+        return
 
 
 def run():
