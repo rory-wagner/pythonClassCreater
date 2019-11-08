@@ -10,6 +10,7 @@ G_OBJECT = {
 def parseTheData(jsonObject):
     className = createClassName()
     initMethod = createInitMethod()
+    splitInitAndMethods = "\t\treturn\n"
     initMembers = []
     getMethods = []
     setMethods = []
@@ -20,16 +21,19 @@ def parseTheData(jsonObject):
         getMethods.append(createGetMethod(key))
         setMethods.append(createSetMethod(key))
 
-    writeTheData(className, initMethod, initMembers, getMethods, setMethods)
+    writeTheData(className, initMethod, splitInitAndMethods, initMembers, getMethods, setMethods)
     return
 
-def writeTheData(className, initMethod, initMembers, getMethods, setMethods):
-    for i in initMembers:
-        print(initMembers[i])
-        print(getMethods[i])
-        print(setMethods[i])
-
-
+def writeTheData(className, initMethod, splitInitAndMethods, initMembers, getMethods, setMethods):
+    pythonFile = open("yourClass.py", "w")
+    pythonFile.write(className)
+    pythonFile.write(initMethod)
+    for i in range(len(initMembers)):
+        pythonFile.write(initMembers[i])
+    
+    for i in range(len(getMethods)):
+        pythonFile.write(getMethods[i])
+        pythonFile.write(setMethods[i])
     return
 
 def createClassName():
@@ -44,12 +48,13 @@ def createINITMember(key, value):
 
 def createGetMethod(key):
     string = "\tdef get" + key + "(self):\n"
-    string += "\t\t return self." + key + "\n"
+    string += "\t\treturn self." + key + "\n"
     return string
 
 def createSetMethod(key):
-    string = "\tdef set" + key + "(self):\n"
-    string += "\t\t return self." + key + "\n"
+    string = "\tdef set" + key + "(self, value):\n"
+    string += "\t\tself." + key + " = value\n"
+    string += "\t\treturn\n"
     return string
 
 def test():
