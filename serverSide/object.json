@@ -1,0 +1,8 @@
+{
+    "mDictionary": {
+        "dictNumber": 42
+    },
+    "mList": [0, 1, 2],
+    "mString": "Hello World",
+    "mNum": 65
+}
