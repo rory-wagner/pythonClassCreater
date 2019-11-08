@@ -1,6 +1,8 @@
 import jsonToPyDict
 
-#G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
+G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
+
+print(G_OBJECT)
 
 def parseTheData(jsonObject):
     className = createClassName()
@@ -20,22 +22,24 @@ def parseTheData(jsonObject):
     return
 
 def writeTheData(className, initMethod, splitInitAndMethods, initMembers, getMethods, setMethods):
-    pythonFile = open("yourClass.py", "w")
-    pythonFile.write(className)
-    pythonFile.write(initMethod)
+    cppFile = open("yourClass.cpp", "w")
+    
+    cppFile.write("using namespace std;")
+    cppFile.write(className)
+    cppFile.write(initMethod)
     for i in range(len(initMembers)):
-        pythonFile.write(initMembers[i])
+        cppFile.write(initMembers[i])
     
     for i in range(len(getMethods)):
-        pythonFile.write(getMethods[i])
-        pythonFile.write(setMethods[i])
+        cppFile.write(getMethods[i])
+        cppFile.write(setMethods[i])
     return
 
 def createClassName():
-    return "class YourClassName:\n"
+    return "class YourClassName\n"
 
 def createInitMethod():
-    return "\tdef __init__(self):\n"
+    return "{\n\tpublic:\n"
 
 
 def createINITMember(key, value):
@@ -52,7 +56,8 @@ def createSetMethod(key):
     string += "\t\treturn\n"
     return string
 
-# def test():
-#     parseTheData(G_OBJECT)
-#     return
-# test()
+def test():
+    parseTheData(G_OBJECT)
+    return
+
+test()
