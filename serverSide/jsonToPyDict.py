@@ -5,6 +5,3 @@ def jsonToPyDict(filename):
     jsonData = jsonFile.read()
     jsonLoad = json.loads(jsonData)
     return jsonLoad
-    
-  
-print(jsonToPyDict("object.json") )
