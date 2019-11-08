@@ -1,14 +1,19 @@
+var browsebutton = document.Selector("#filefind")
+browsebutton.onclick = function(){
+	var inputFile = browsebutton.value.getJSON()
 
-var loadjsondata = fucnciont()
-{
 
-	fetch("http://localhost:8080/jsondatas").then(function (response) 
-	{
-		response.json().then(function(data){
-			
+	fetch("http://localhost:8080/files", {
+			method: "POST",
+			body: bodyStr,
+			headers:{
+				"Content-Type":"application/x-www-form-urlencoded"
+			}
 
-		});
+		}).then(function(response){
+				console.log("Server Responed")
 
-	});
-}
+			});
+	}
+};
 
