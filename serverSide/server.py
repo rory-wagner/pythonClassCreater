@@ -5,10 +5,6 @@ import jsonToPyDict
 class MyRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        self.createPythonFile()
-        return
-
-    def do_GET(self):
         if self.path == "/files":
             pass
         else:
