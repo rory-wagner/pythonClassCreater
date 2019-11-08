@@ -5,7 +5,7 @@ import jsonToPyDict
 def parseTheData(jsonObject):
     className = createClassName()
     initMethod = createInitMethod()
-    splitInitAndMethods = "\t\treturn\n"
+    splitInitAndMethods = "\t\treturn\n\n"
     initMembers = []
     getMethods = []
     setMethods = []
@@ -25,6 +25,8 @@ def writeTheData(className, initMethod, splitInitAndMethods, initMembers, getMet
     pythonFile.write(initMethod)
     for i in range(len(initMembers)):
         pythonFile.write(initMembers[i])
+
+    pythonFile.write(splitInitAndMethods)
     
     for i in range(len(getMethods)):
         pythonFile.write(getMethods[i])
@@ -32,7 +34,7 @@ def writeTheData(className, initMethod, splitInitAndMethods, initMembers, getMet
     return
 
 def createClassName():
-    return "class YourClassName:\n"
+    return "class YourClassName:\n\n"
 
 def createInitMethod():
     return "\tdef __init__(self):\n"
@@ -43,13 +45,13 @@ def createINITMember(key, value):
 
 def createGetMethod(key):
     string = "\tdef get" + key + "(self):\n"
-    string += "\t\treturn self." + key + "\n"
+    string += "\t\treturn self." + key + "\n\n"
     return string
 
 def createSetMethod(key):
     string = "\tdef set" + key + "(self, value):\n"
     string += "\t\tself." + key + " = value\n"
-    string += "\t\treturn\n"
+    string += "\t\treturn\n\n"
     return string
 
 # def test():
