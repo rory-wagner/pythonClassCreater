@@ -1,19 +1,6 @@
-# G_OBJECT = {
-#     "mDictionary": {
-#         "dictNumber": 42
-#     },
-#     "mList": [0, 1, 2],
-#     "mString": "Hello World",
-#     "mNum": 65,
-#     "bool" : False,
-#     "null": null
-# }
-
 import jsonToPyDict
 
-G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
-
-print(G_OBJECT)
+#G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
 
 def parseTheData(jsonObject):
     className = createClassName()
@@ -65,7 +52,7 @@ def createSetMethod(key):
     string += "\t\treturn\n"
     return string
 
-def test():
-    parseTheData(G_OBJECT)
-    return
-test()
+# def test():
+#     parseTheData(G_OBJECT)
+#     return
+# test()
