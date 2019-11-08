@@ -1,10 +1,11 @@
 import jsonToPyDict
 
-#G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
+G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
 
 def parseTheData(jsonObject):
     className = createClassName()
     initMethod = createInitMethod()
+    # populatedInitMethod = createPopulatedInit(jsonObject)
     splitInitAndMethods = "\t\treturn\n\n"
     initMembers = []
     getMethods = []
@@ -18,6 +19,11 @@ def parseTheData(jsonObject):
 
     writeTheData(className, initMethod, splitInitAndMethods, initMembers, getMethods, setMethods)
     return
+
+def createPopulatedInit():
+    
+    return string
+
 
 def writeTheData(className, initMethod, splitInitAndMethods, initMembers, getMethods, setMethods):
     pythonFile = open("yourClass.py", "w")
@@ -41,7 +47,9 @@ def createInitMethod():
 
 
 def createINITMember(key, value):
-    return "\t\tself." + key + "\n"
+    if type(value) == str:
+        return "\t\tself." + key + " = " + '"' + str(value) + '"' + "\n"
+    return "\t\tself." + key + " = " + str(value) + "\n"
 
 def createGetMethod(key):
     string = "\tdef get" + key + "(self):\n"
@@ -54,7 +62,7 @@ def createSetMethod(key):
     string += "\t\treturn\n\n"
     return string
 
-# def test():
-#     parseTheData(G_OBJECT)
-#     return
-# test()
+def test():
+    parseTheData(G_OBJECT)
+    return
+test()
