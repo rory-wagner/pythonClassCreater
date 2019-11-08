@@ -1,32 +1,36 @@
 import jsonToPyDict
 
 G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
+variableTypes= {"<class 'dict'>":"std::map<char, char>",
+"<class 'list'>":"int",
+"<class 'str'>":"char",
+"<class 'int'>":"int",
+"<class 'bool'>":"bool",
+"<class 'NoneType'>":"int*"}
 
 print(G_OBJECT)
 
 def parseTheData(jsonObject):
     className = createClassName()
-    initMethod = createInitMethod()
-    splitInitAndMethods = "\t\treturn\n"
+    
     initMembers = []
     getMethods = []
     setMethods = []
 
     for key in jsonObject:
         value = jsonObject[key]
-        initMembers.append(createINITMember(key, value))
-        getMethods.append(createGetMethod(key))
-        setMethods.append(createSetMethod(key))
+        dtype = type(value)
+        ctype = variableTypes[str(dtype)]
+        initMembers.append(ctype +" "+ key+";")
 
-    writeTheData(className, initMethod, splitInitAndMethods, initMembers, getMethods, setMethods)
+    print(initMembers)
     return
 
-def writeTheData(className, initMethod, splitInitAndMethods, initMembers, getMethods, setMethods):
+def writeTheData(className, privateAndpublic, initMembers, getMethods, setMethods):
     cppFile = open("yourClass.cpp", "w")
-    
-    cppFile.write("using namespace std;")
+    cppFile.write("#include <map>\n")
     cppFile.write(className)
-    cppFile.write(initMethod)
+    cppFile.write("{\nprivate:\n")
     for i in range(len(initMembers)):
         cppFile.write(initMembers[i])
     
@@ -38,23 +42,8 @@ def writeTheData(className, initMethod, splitInitAndMethods, initMembers, getMet
 def createClassName():
     return "class YourClassName\n"
 
-def createInitMethod():
-    return "{\n\tpublic:\n"
 
 
-def createINITMember(key, value):
-    return "\t\tself." + key + "\n"
-
-def createGetMethod(key):
-    string = "\tdef get" + key + "(self):\n"
-    string += "\t\treturn self." + key + "\n"
-    return string
-
-def createSetMethod(key):
-    string = "\tdef set" + key + "(self, value):\n"
-    string += "\t\tself." + key + " = value\n"
-    string += "\t\treturn\n"
-    return string
 
 def test():
     parseTheData(G_OBJECT)
