@@ -4,6 +4,15 @@ var cxxButton = document.querySelector("#cppButton");
 pythonButton.onclick = function (){
 	path = "http://localhost:8080/python";
 	sendJSON(path);
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var file = document.querySelector("#fileSearch");
+
+		};
+		xhttp.open("POST", file, true);
+		xhttp.send();
+	};
 };
 
 cxxButton.onclick = function (){
@@ -16,7 +25,8 @@ function sendJSON(path){
 	var textArea = document.querySelector("#inputBox");
 
 	var bodyString = "jsonData=" + encodeURIComponent(textArea.value);
-	console.log(bodyString)
+	var bodyString = file;
+	console.log(bodyString);
 
 	fetch(path, {
 		method: "POST",
@@ -26,9 +36,19 @@ function sendJSON(path){
 		}
 
 	}).then(function(response) {
-		fetch("http://localhost:8080/files", {
+		fetch(path, {
 			
-		})
+			// var xhttp = new XMLHttpRequest();
+			// xhttp.onreadystatechange = function() {
+			// 	if (this.readyState == 4 && this.status == 200) {
+			// 		var file = document.querySelector("#fileSearch");
+
+			// 	};
+			// 	xhttp.open("POST", file, true);
+			// 	xhttp.send();
+			// };
+			
+		});
 
 	});
-}
+};
