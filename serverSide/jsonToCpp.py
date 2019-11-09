@@ -10,8 +10,8 @@ variableTypes= {"<class 'dict'>":"std::map<char, char>",
 
 
 
-def parseTheData(jsonObject):
-    className = createClassName()
+def parseTheData(jsonObject, className = "YourClassName", filename = "yourFilename.cpp"):
+    
     # type and variable name
     initMembers = []
     #get methods
@@ -38,11 +38,11 @@ def parseTheData(jsonObject):
         dataMembers.append("\t"+key+" = value"+str(count)+";\n")
         count +=1
         setMethods.append("void "+className+"::set"+key+"("+ctype+" value){\n\t"+key+" = value;\n}\n")
-    writeTheData(className, dataMembers, initMembers, getMethods, setMethods, publics, ctypes, values)
+    writeTheData(className, dataMembers, initMembers, getMethods, setMethods, publics, ctypes, values, filename)
     return
 
-def writeTheData(className, dataMembers, initMembers, getMethods, setMethods, publics, ctypes, values):
-    cppFile = open("yourClass.cpp", "w")
+def writeTheData(className, dataMembers, initMembers, getMethods, setMethods, publics, ctypes, values, filename):
+    cppFile = open(filename, "w")
     cppFile.write("#include <map>\n")
     cppFile.write("class "+className+"\n")
     cppFile.write("{\nprivate:\n")
@@ -132,4 +132,4 @@ def test():
     parseTheData(G_OBJECT)
     return
 
-#test()
+test()

@@ -1,25 +1,23 @@
 import jsonToPyDict
 
-# G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
+G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
 
-def parseTheData(jsonObject):
-    className = createClassName()
+def parseTheData(jsonObject, classNameP = "YourClassName", filename = "yourFilename.py"):
+    className = createClassName(classNameP)
     initMethod = createInitMethod()
     populatedInitMethod = createPopulatedInit(jsonObject)
     splitInitAndMethods = "\t\treturn\n\n"
     initMembers = []
     getMethods = []
     setMethods = []
-    print(jsonObject)
 
     for key in jsonObject:
-        print(key)
         value = jsonObject[key]
         initMembers.append(createINITMember(key, value))
         getMethods.append(createGetMethod(key))
         setMethods.append(createSetMethod(key))
 
-    writeTheData(className, initMethod, splitInitAndMethods, populatedInitMethod, initMembers, getMethods, setMethods)
+    writeTheData(className, initMethod, splitInitAndMethods, populatedInitMethod, initMembers, getMethods, setMethods, filename)
     return
 
 def createPopulatedInit(jsonObject):
@@ -32,8 +30,8 @@ def createPopulatedInit(jsonObject):
     return string
 
 
-def writeTheData(className, initMethod, splitInitAndMethods, populatedInitMethod, initMembers, getMethods, setMethods):
-    pythonFile = open("yourClass.py", "w")
+def writeTheData(className, initMethod, splitInitAndMethods, populatedInitMethod, initMembers, getMethods, setMethods, filename):
+    pythonFile = open(filename, "w")
     pythonFile.write(className)
     pythonFile.write(initMethod)
     for i in range(len(initMembers)):
@@ -48,8 +46,8 @@ def writeTheData(className, initMethod, splitInitAndMethods, populatedInitMethod
         pythonFile.write(setMethods[i])
     return
 
-def createClassName():
-    return "class YourClassName:\n\n"
+def createClassName(classnameP):
+    return "class "+classnameP+":\n\n"
 
 def createInitMethod():
     return "\tdef __init__(self):\n"
@@ -71,7 +69,7 @@ def createSetMethod(key):
     string += "\t\treturn\n\n"
     return string
 
-# def test():
-#     parseTheData(G_OBJECT)
-#     return
-# test()
+def test():
+    parseTheData(G_OBJECT, classNameP="Testing", filename="testing.py")
+    return
+test()

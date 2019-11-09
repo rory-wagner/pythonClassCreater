@@ -4,6 +4,7 @@ import jsonToCpp
 import jsonToPython
 import jsonToPyDict
 import json
+import os
 
 class MyRequestHandler(BaseHTTPRequestHandler):
 
@@ -17,22 +18,30 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         print("someone trying to get.")
-        if self.path == "/files":
+        if self.path == "/python":
             #send the link to the file here.
             self.send200()
+            self.sendBackFile("python")
+            self.end_headers()
+        elif self.path == "/c++":
+            self.send200()
+            self.sendBackFile("c++")
+            self.end_headers()
         else:
             self.send404()
         return
 
     def do_POST(self):
         print("someone trying to post.")
-        data = self.getProperFormOfData()
+        data, className, fileName = self.getProperFormOfData()
         if self.path == "/python":
-            self.createPythonFile(data)
+            self.createPythonFile(data, className, fileName)
             self.send201()
+            self.end_headers()
         elif self.path == "/c++":
-            self.createCppFile(data)
+            self.createCppFile(data, className, fileName)
             self.send201()
+            self.end_headers()
         else:
             self.send404()
         return
@@ -41,13 +50,12 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         self.send_response(201)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-type", "text/html")
-        self.end_headers()
 
     def send200(self):
+        print("I am sending 200")
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-type", "text/html")
-        self.end_headers()
         return
 
     def send404(self):
@@ -65,27 +73,40 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         print(body)
         parsedBody = parse_qs(body)
         print("Parsed Body:", parsedBody)
+
         data = parsedBody["jsonData"][0]
+        fileName = parsedBody["fileName"][0]
+        className = parsedBody["className"][0]
+
         print(type(data))
         data = json.loads(data)
         print("Final form of data:", data)
-        return data
+        return data, className, fileName
 
-    def createPythonFile(self, data):
+    def createPythonFile(self, data, className, fileName):
         jsonToPython.parseTheData(data)
         return
 
-    def createCppFile(self, data):
-        jsonToCpp.parseTheData(data)
+    def createCppFile(self, data, className, fileName):
+        jsonToCpp.parseTheData(data, className, fileName)
         return
 
-    def sendBackFile(self):
-        self.send_header('Content-type', 'application/pdf')
-        self.send_header('Content-Disposition', 'attachment; filename="file.pdf"')
-        self.end_headers()
+    def sendBackFile(self, languageName):
+        # self.send_header('Content-type', 'application/py')
+        # self.send_header('Content-Disposition', 'attachment; filename="yourClass.py"')
+        # self.end_headers()
 
-        # not sure about this part below
-        self.wfile.write(open('/yourClass.py', 'rb'))
+        # # not sure about this part below
+        # dataFile = open("yourClass.py", 'rb')
+        # self.wfile.write(dataFile.read())
+
+        if languageName == "python":
+
+            filename = os.path.abspath("yourClass.py")
+            print(filename, type(filename))
+            self.wfile.write(bytes(json.dumps(filename), "utf-8"))
+        # reply_body = 'Saved "%s"\n' % filename
+        # self.wfile.write(reply_body.encode('utf-8'))
         return
 
 
@@ -99,3 +120,4 @@ def run():
     server.serve_forever()
 
 run()
+
