@@ -19,6 +19,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         print("someone trying to get.")
         if self.path == "/files":
             #send the link to the file here.
+            self.sendBackFile()
             self.send200()
         else:
             self.send404()
@@ -80,12 +81,13 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         return
 
     def sendBackFile(self):
-        self.send_header('Content-type', 'application/pdf')
-        self.send_header('Content-Disposition', 'attachment; filename="file.pdf"')
+        self.send_header('Content-type', 'application/py')
+        self.send_header('Content-Disposition', 'attachment; filename="yourClass.py"')
         self.end_headers()
 
         # not sure about this part below
-        self.wfile.write(open('/yourClass.py', 'rb'))
+        dataFile = open("yourClass.py", 'rb')
+        self.wfile.write(dataFile.read())
         return
 
 
