@@ -91,3 +91,6 @@ p {
 	font-size: large;
 	display: inline-block;
 }
+#displayLink{
+	display: none;
+}

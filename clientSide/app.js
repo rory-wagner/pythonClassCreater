@@ -59,23 +59,27 @@ function sendJSON(path){
 
 	}).then(function (postResponse) {
 		console.log(postResponse);
+		console.log(fileNameInput.value);
 		fetch(path + "/" + fileNameInput.value, {
 			method: "GET",
 			headers: {
 			}
 		}).then(function main(getResponse){
-			console.log("Get Response" + getResponse);
 
-			getResponse.json().then(function (fileLink) {
+			getResponse.text().then(function (fileLink) {
 
-			console.log("Server responded from GET!");
-			console.log(fileLink);
-			
-			//make sure fileLink is a link to a file.
-			var downloadLink = document.querySelector("#downloadLink");
-			var displayLink = document.querySelector("#displayLink");
-			displayLink.style.display = "block";
-			downloadLink.setAttribute("href", fileLink);
-		})
-	});
-})};
+				console.log("Server responded from GET!");
+				console.log(fileLink);
+				fileLink = fileLink.slice(6);
+				
+				//make sure fileLink is a link to a file.
+				var downloadLink = document.querySelector("#downloadLink");
+				var displayLink = document.querySelector("#displayLink");
+				displayLink.style.display = "block";
+				downloadLink.setAttribute("href", fileLink);
+				downloadLink.innerHTML = "download";
+				console.log("Finished");
+			})
+		});
+	}
+)};

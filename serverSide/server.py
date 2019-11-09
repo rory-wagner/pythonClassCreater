@@ -18,12 +18,13 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         print("someone trying to get.")
-        if self.path == "/python":
+        if self.path == "/python" or self.path.startswith("/python/"):
             #send the link to the file here.
             self.send200()
-            self.sendBackFile("python")
             self.end_headers()
-        elif self.path == "/c++":
+            self.sendBackFile("python")
+
+        elif self.path == "/c++" or self.path.startswith("/c++/"):
             self.send200()
             self.sendBackFile("c++")
             self.end_headers()
@@ -34,11 +35,11 @@ class MyRequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         print("someone trying to post.")
         data, className, fileName = self.getProperFormOfData()
-        if self.path == "/python" or self.path.startswith("/python/"):
+        if self.path == "/python":
             self.createPythonFile(data, className, fileName)
             self.send201()
             self.end_headers()
-        elif self.path == "/c++" or self.path.startswith("/python/"):
+        elif self.path == "/c++":
             self.createCppFile(data, className, fileName)
             self.send201()
             self.end_headers()
@@ -102,12 +103,17 @@ class MyRequestHandler(BaseHTTPRequestHandler):
     def sendBackFile(self, languageName):
         parts = self.path.split("/")
         retrieveFileName = parts[2]
+        print("path of file name: " + retrieveFileName, type(retrieveFileName))
 
-        if languageName == "python":
-
-            filename = os.path.abspath(retrieveFileName)
-            print(filename, type(filename))
-            self.wfile.write(bytes(json.dumps(filename), "utf-8"))
+        if retrieveFileName == "" and languageName == "python":
+            retrieveFileName = "yourFilename.py"
+        if retrieveFileName == "" and languageName == "c++":
+            retrieveFileName = "yourFilename.cpp"
+        filename = os.path.abspath(retrieveFileName)
+        print(filename, type(filename))
+        filename = bytes(filename, "utf-8")
+        print(filename)
+        self.wfile.write(filename)
         # reply_body = 'Saved "%s"\n' % filename
         # self.wfile.write(reply_body.encode('utf-8'))
         return
