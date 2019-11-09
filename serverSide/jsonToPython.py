@@ -1,6 +1,6 @@
 import jsonToPyDict
 
-G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
+# G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
 
 def parseTheData(jsonObject):
     className = createClassName()
@@ -10,8 +10,10 @@ def parseTheData(jsonObject):
     initMembers = []
     getMethods = []
     setMethods = []
+    print(jsonObject)
 
     for key in jsonObject:
+        print(key)
         value = jsonObject[key]
         initMembers.append(createINITMember(key, value))
         getMethods.append(createGetMethod(key))
@@ -69,7 +71,7 @@ def createSetMethod(key):
     string += "\t\treturn\n\n"
     return string
 
-def test():
-    parseTheData(G_OBJECT)
-    return
-test()
+# def test():
+#     parseTheData(G_OBJECT)
+#     return
+# test()
