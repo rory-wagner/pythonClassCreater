@@ -12,9 +12,12 @@
 		<br>
 		<h2>Enter JSON{} Data Here:</h2><br>
 		<textarea id="inputBox" rows="15" cols="55"></textarea><br><br>
-		<h2 id="h2-or">OR</h2>
+		<h2 id="h2-or">Choose a JSON File:</h2>
+		<br>
+		<br>
 		<input type="file" id="fileSearch">
 		<h3 id="h2-title">Select the language of your class object.</h3>
+		<br>
 		<br>
 		<label>File Name</label>
 		<input id = "fileNameInput">
@@ -24,7 +27,12 @@
 		<button id="pyButton">Python</button>
 		<p>OR</p>
 		<button id="cppButton">C++</button>
-	>
+		<br>
+		<div id = "displaylink">
+			<p id = "link">Click the Link to download your files.</p>
+			<a id = "downloadLink"></a>
+		</div>
+	
 
 	</div>
 	<script type="text/javascript" src="app.js"></script>
