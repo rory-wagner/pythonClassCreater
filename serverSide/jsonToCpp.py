@@ -58,7 +58,7 @@ def writeTheData(className, dataMembers, initMembers, getMethods, setMethods, pu
         else:
              string=ctypes[i]+" "+"value"+str(i)
         valuesAll+=string
-    cppFile.write("\t"+className+"();\n\t"+className+"("+valuesAll+")\n\t~"+className+"();\n};\n\n")
+    cppFile.write("\t"+className+"();\n\t"+className+"("+valuesAll+");\n\t~"+className+"();\n};\n\n")
 
     
     for i in range(len(getMethods)):
