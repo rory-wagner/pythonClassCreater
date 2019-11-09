@@ -26,8 +26,8 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 
         elif self.path == "/c++" or self.path.startswith("/c++/"):
             self.send200()
-            self.sendBackFile("c++")
             self.end_headers()
+            self.sendBackFile("c++")
         else:
             self.send404()
         return
@@ -87,14 +87,14 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         return data, className, fileName
 
     def createPythonFile(self, data, className, fileName):
-        if className == "null" and fileName == "null":
+        if className == "null" or fileName == "null":
             jsonToPython.parseTheData(data)
         else:
             jsonToPython.parseTheData(data, className, fileName)
         return
 
     def createCppFile(self, data, className, fileName):
-        if className == "null" and fileName == "null":
+        if className == "null" or fileName == "null":
             jsonToCpp.parseTheData(data)
         else:
             jsonToCpp.parseTheData(data, className, fileName)
