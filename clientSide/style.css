@@ -1,49 +1,69 @@
 *{
     font-family: serif;
 }
-body {
-	margin-top: none;
-	background-image: url("code.jpg");
-	background-size: cover;
+body,html {
+
 	margin: auto;
 	text-align: center;
+	height: 100%;
 }
-img {
-	opacity: 0.5;
-	filter: alpha(opacity=50);
+
+#fileSearchDiv{
+
+	background-image: url('code3.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100%;
 }
+
+
 h1 {
-	background-color: gray;
-	color: red;
-	-webkit-text-stroke: 2px black;
+	
+	color: black;
+	margin-top: 0px;
+	padding: 10px;
+	font-size: 60px;
+	background-color: white;
+	opacity: .5;
+
 }
-#fileSearchDiv {
-	margin: auto;
-}
-label {
+
+
+h2 {
+
+	margin-top: 30px;
+	margin-bottom: 0px;
 	padding-left: 15px;
 	padding-right: 15px;
-	background-color: gray;
-	
-	font-size: x-large;
-	font-style: bold;
+	font-size: 35px;
+	font-weight: bold;
+	color: lightgray;
+
 }
+
+
 #inputBox {
-	margin: auto;
+	margin: 0px;
 	font-size: x-large;
+	border:2px ;color:black;
+	box-shadow: inset;
+	resize: none;
 }
 #h2-or {
-	background-color: gray;
+
+	color: white;
 }
+
 #fileSearch {
-	background-color: gray;
+	background-color: white;
+
 }
+
 #h2-title {
-	margin: auto;
-	width: 500px;
-	background-color: gray;
-	
+	margin: 10px;
+	color: lightyellow;
 }
+
 #pyButton {
 	font-size: large;
 	display: inline-block;
@@ -52,6 +72,7 @@ p {
 	padding-left: 15px;
 	padding-right: 15px;
 	display: inline-block;
+	color: antiquewhite;
 }
 #cppButton {
 	font-size: large;
