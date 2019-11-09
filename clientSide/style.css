@@ -5,6 +5,7 @@ body,html {
 
 	margin: auto;
 	text-align: center;
+	background-color: grey;
 	height: 100%;
 }
 
@@ -14,6 +15,7 @@ body,html {
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 100%;
+	background-color:black;
 }
 
 
@@ -41,17 +43,27 @@ h2 {
 
 }
 
+label{
+
+	color: white;
+
+}
+
 
 #inputBox {
-	margin: 0px;
+	margin: 27px;
 	font-size: x-large;
 	border:2px ;color:black;
 	box-shadow: inset;
 	resize: none;
 }
+
 #h2-or {
 
 	color: white;
+	text-align: center;
+	margin:5px;
+	padding:10px;
 }
 
 #fileSearch {
@@ -68,6 +80,7 @@ h2 {
 	font-size: large;
 	display: inline-block;
 }
+
 p {
 	padding-left: 15px;
 	padding-right: 15px;
