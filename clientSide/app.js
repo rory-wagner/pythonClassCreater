@@ -2,33 +2,46 @@ var pythonButton = document.querySelector("#pyButton");
 var cxxButton = document.querySelector("#cppButton");
 var file = 0;
 var fileLink;
+var textArea = document.querySelector("#inputBox");
+var fileNameInput = document.querySelector("#fileNameInput");
+var classNameInput = document.querySelector("#classNameInput");
 
 pythonButton.onclick = function (){
 	path = "http://localhost:8080/python";
+	if(fileNameInput.value != "" && fileNameInput.value.slice(-3) != ".py" ){
+		alert("Only a proper Python filename is accepted.");
+		return
+	}
 	sendJSON(path);
-	// var xhttp = new XMLHttpRequest();
-	// xhttp.onreadystatechange = function() {
-	// 	if (this.readyState == 4 && this.status == 200) {
-	// 		file = document.querySelector("#fileSearch");
-
-	// 	};
-	// 	xhttp.open("POST", file, true);
-	// 	xhttp.send();
-	// };
 };
 
 cxxButton.onclick = function (){
 	path = "http://localhost:8080/c++";
+	if(fileNameInput.value != "" && fileNameInput.value.slice(-4) != ".cpp" ){
+		alert("Only a proper C++ filename is accepted.");
+		return
+	}
 	sendJSON(path);
 };
 
 function sendJSON(path){
-	
-	var textArea = document.querySelector("#inputBox");
-	var fileNameInput = document.querySelector("#fileNameInput");
-	var classNameInput = document.querySelector("#classNameInput");
 
+	console.log(typeof textArea.value);
+	var possibleObject;
+	try{
+		possibleObject = JSON.parse(textArea.value);
+	}
+	catch{
+		alert("Only proper JSON formatting is accepted.");
+		return
+	}
+	// if (typeof JSON.parse(textArea.value) != 'object' ){
+	// 	alert("Only proper JSON formatting is accepted.");
+	// 	return
+	// }
 	var bodyString = "jsonData=" + encodeURIComponent(textArea.value);
+
+
 	if(fileNameInput.value != ""){
 		bodyString += "&fileName=" + encodeURIComponent(fileNameInput.value);
 	}
@@ -83,3 +96,12 @@ function sendJSON(path){
 		});
 	}
 )};
+	// var xhttp = new XMLHttpRequest();
+	// xhttp.onreadystatechange = function() {
+	// 	if (this.readyState == 4 && this.status == 200) {
+	// 		file = document.querySelector("#fileSearch");
+
+	// 	};
+	// 	xhttp.open("POST", file, true);
+	// 	xhttp.send();
+	// };
