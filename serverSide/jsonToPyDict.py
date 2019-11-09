@@ -3,9 +3,9 @@ import json
 def jsonToPyDict(filename):
     jsonFile = open(filename)
     jsonData = jsonFile.read()
-    print(jsonData)
+    # print(jsonData)
     jsonLoad = json.loads(jsonData)
-    print(jsonLoad)
+    # print(jsonLoad)
     return jsonLoad
 
-jsonToPyDict("object.json")
+# jsonToPyDict("object.json")

@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs
+import jsonToCpp
 import jsonToPython
 import jsonToPyDict
 import json
@@ -69,7 +70,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         fout = open("other.json", 'w')
         fout.write(data)
         print(type(data))
-        data = dict(data)
+        data = json.loads(data)
         print(data)
         return data
 
@@ -78,7 +79,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         return
 
     def createCppFile(self, data):
-
+        jsonToCpp.parseTheData(data)
         return
 
 
