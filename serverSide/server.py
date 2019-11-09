@@ -18,9 +18,12 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         print("someone trying to get.")
-        if self.path == "/files":
+        if self.path == "/python":
             #send the link to the file here.
-            self.sendBackFile()
+            self.sendBackFile("python")
+            self.send200()
+        elif self.path == "/c++":
+            self.sendBackFile("c++")
             self.send200()
         else:
             self.send404()
@@ -46,6 +49,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def send200(self):
+        print("I am sending 200")
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-type", "text/html")
@@ -81,7 +85,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         jsonToCpp.parseTheData(data)
         return
 
-    def sendBackFile(self):
+    def sendBackFile(self, languageName):
         # self.send_header('Content-type', 'application/py')
         # self.send_header('Content-Disposition', 'attachment; filename="yourClass.py"')
         # self.end_headers()
@@ -90,9 +94,13 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         # dataFile = open("yourClass.py", 'rb')
         # self.wfile.write(dataFile.read())
 
-        filename = os.path.basename("yourClass.py")
-        reply_body = 'Saved "%s"\n' % filename
-        self.wfile.write(reply_body.encode('utf-8'))
+        if languageName == "python":
+
+            filename = os.path.abspath("yourClass.py")
+            print(filename, type(filename))
+            self.wfile.write(bytes(json.dumps(filename), "utf-8"))
+        # reply_body = 'Saved "%s"\n' % filename
+        # self.wfile.write(reply_body.encode('utf-8'))
         return
 
 

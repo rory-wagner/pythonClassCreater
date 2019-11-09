@@ -1,5 +1,7 @@
 var pythonButton = document.querySelector("#pyButton");
 var cxxButton = document.querySelector("#cppButton");
+var file = 0;
+var fileLink;
 
 pythonButton.onclick = function (){
 	path = "http://localhost:8080/python";
@@ -7,7 +9,7 @@ pythonButton.onclick = function (){
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			var file = document.querySelector("#fileSearch");
+			file = document.querySelector("#fileSearch");
 
 		};
 		xhttp.open("POST", file, true);
@@ -25,7 +27,9 @@ function sendJSON(path){
 	var textArea = document.querySelector("#inputBox");
 
 	var bodyString = "jsonData=" + encodeURIComponent(textArea.value);
-	var bodyString = file;
+	if( file !== 0 ){
+		bodyString = file;
+	}
 	console.log(bodyString);
 
 	fetch(path, {
@@ -35,20 +39,19 @@ function sendJSON(path){
 			"Content-Type": "application/x-www-form-urlencoded"
 		}
 
-	}).then(function(response) {
+	}).then(function (postResponse) {
+		console.log(postResponse);
 		fetch(path, {
-			
-			// var xhttp = new XMLHttpRequest();
-			// xhttp.onreadystatechange = function() {
-			// 	if (this.readyState == 4 && this.status == 200) {
-			// 		var file = document.querySelector("#fileSearch");
-
-			// 	};
-			// 	xhttp.open("POST", file, true);
-			// 	xhttp.send();
-			// };
-			
-		});
-
+			method: "GET",
+			headers: {
+			}
+		}).then(function main(getResponse){
+			console.log(getResponse);
+			response.json().then(function (data) {
+			fileLink = data;
+			console.log("Server responded from GET!");
+			console.log(data);
+			displayCharacters();
+		})
 	});
-};
+})};
