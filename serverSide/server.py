@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import parseTheJSON
+import jsonToPython
 import jsonToPyDict
 import json
 
@@ -45,7 +45,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 
     def createPythonFile(self):
         jsonObject = jsonToPyDict.jsonToPyDict("object.json")
-        parseTheJSON.parseTheData(jsonObject)
+        jsonToPython.parseTheData(jsonObject)
 
     def createCppFile(self):
 
