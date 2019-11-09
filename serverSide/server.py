@@ -20,24 +20,28 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         print("someone trying to get.")
         if self.path == "/python":
             #send the link to the file here.
+            self.send200()
             self.sendBackFile("python")
-            self.send200()
+            self.end_headers()
         elif self.path == "/c++":
-            self.sendBackFile("c++")
             self.send200()
+            self.sendBackFile("c++")
+            self.end_headers()
         else:
             self.send404()
         return
 
     def do_POST(self):
         print("someone trying to post.")
-        data = self.getProperFormOfData()
+        data, className, fileName = self.getProperFormOfData()
         if self.path == "/python":
-            self.createPythonFile(data)
+            self.createPythonFile(data, className, fileName)
             self.send201()
+            self.end_headers()
         elif self.path == "/c++":
-            self.createCppFile(data)
+            self.createCppFile(data, className, fileName)
             self.send201()
+            self.end_headers()
         else:
             self.send404()
         return
@@ -46,14 +50,12 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         self.send_response(201)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-type", "text/html")
-        self.end_headers()
 
     def send200(self):
         print("I am sending 200")
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-type", "text/html")
-        self.end_headers()
         return
 
     def send404(self):
@@ -71,18 +73,22 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         print(body)
         parsedBody = parse_qs(body)
         print("Parsed Body:", parsedBody)
+
         data = parsedBody["jsonData"][0]
+        fileName = parsedBody["fileName"][0]
+        className = parsedBody["className"][0]
+
         print(type(data))
         data = json.loads(data)
         print("Final form of data:", data)
-        return data
+        return data, className, fileName
 
-    def createPythonFile(self, data):
+    def createPythonFile(self, data, className, fileName):
         jsonToPython.parseTheData(data)
         return
 
-    def createCppFile(self, data):
-        jsonToCpp.parseTheData(data)
+    def createCppFile(self, data, className, fileName):
+        jsonToCpp.parseTheData(data, className, fileName)
         return
 
     def sendBackFile(self, languageName):

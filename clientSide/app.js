@@ -25,8 +25,26 @@ cxxButton.onclick = function (){
 function sendJSON(path){
 	
 	var textArea = document.querySelector("#inputBox");
+	var fileNameInput = document.querySelector("#fileNameInput");
+	var classNameInput = document.querySelector("#classNameInput");
 
 	var bodyString = "jsonData=" + encodeURIComponent(textArea.value);
+	if(fileNameInput.value != ""){
+		bodyString += "fileName=" + encodeURIComponent(fileNameInput.value);
+	}
+	else{
+		bodyString += "fileName=" + encodeURIComponent("null");
+	}
+	if(classNameInput.value != ""){
+		bodyString += "className=" + encodeURIComponent(classNameInput.value);
+	}
+	else{
+		//Might need to change "null" here...
+		bodyString += "className=" + encodeURIComponent("null");
+	}
+
+	//Here we are trying to change the bodyString
+	//Need to get that working by tomorrow or else just scrap it.
 	if( file !== 0 ){
 		bodyString = file;
 	}
@@ -47,11 +65,15 @@ function sendJSON(path){
 			}
 		}).then(function main(getResponse){
 			console.log(getResponse);
-			response.json().then(function (data) {
+			getResponse.json().then(function (data) {
 			fileLink = data;
 			console.log("Server responded from GET!");
 			console.log(data);
-			displayCharacters();
+			//make sure data is a link to a file.
+			var downloadLink = document.querySelector("#downloadLink");
+			var displayLink = document.querySelector("#displayLink");
+			displayLink.style.display = "block";
+			downloadLink.setAttribute("href", data);
 		})
 	});
 })};
