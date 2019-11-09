@@ -8,7 +8,7 @@ variableTypes= {"<class 'dict'>":"std::map<char, char>",
 "<class 'bool'>":"bool",
 "<class 'NoneType'>":"int*"}
 
-print(G_OBJECT)
+
 
 def parseTheData(jsonObject):
     className = createClassName()
@@ -66,7 +66,6 @@ def writeTheData(className, dataMembers, initMembers, getMethods, setMethods, pu
         cppFile.write(setMethods[i])
 
     valuesAll = ""
-    print(ctypes)
     for i in range(len(ctypes)):
         if ctypes[i] == 'std::map<char, char>':
             dic = values[i]
