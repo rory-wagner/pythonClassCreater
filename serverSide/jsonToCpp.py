@@ -128,8 +128,8 @@ def createClassName():
 
 
 
-def test():
-    parseTheData(G_OBJECT)
-    return
+# def test():
+#     parseTheData(G_OBJECT)
+#     return
 
-test()
+# test()

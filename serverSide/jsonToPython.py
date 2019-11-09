@@ -69,7 +69,7 @@ def createSetMethod(key):
     string += "\t\treturn\n\n"
     return string
 
-def test():
-    parseTheData(G_OBJECT, classNameP="Testing", filename="testing.py")
-    return
-test()
+# def test():
+#     parseTheData(G_OBJECT, classNameP="Testing", filename="testing.py")
+#     return
+# test()

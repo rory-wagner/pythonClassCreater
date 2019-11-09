@@ -6,15 +6,15 @@ var fileLink;
 pythonButton.onclick = function (){
 	path = "http://localhost:8080/python";
 	sendJSON(path);
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			file = document.querySelector("#fileSearch");
+	// var xhttp = new XMLHttpRequest();
+	// xhttp.onreadystatechange = function() {
+	// 	if (this.readyState == 4 && this.status == 200) {
+	// 		file = document.querySelector("#fileSearch");
 
-		};
-		xhttp.open("POST", file, true);
-		xhttp.send();
-	};
+	// 	};
+	// 	xhttp.open("POST", file, true);
+	// 	xhttp.send();
+	// };
 };
 
 cxxButton.onclick = function (){
@@ -30,17 +30,17 @@ function sendJSON(path){
 
 	var bodyString = "jsonData=" + encodeURIComponent(textArea.value);
 	if(fileNameInput.value != ""){
-		bodyString += "fileName=" + encodeURIComponent(fileNameInput.value);
+		bodyString += "&fileName=" + encodeURIComponent(fileNameInput.value);
 	}
 	else{
-		bodyString += "fileName=" + encodeURIComponent("null");
+		bodyString += "&fileName=" + encodeURIComponent("null");
 	}
 	if(classNameInput.value != ""){
-		bodyString += "className=" + encodeURIComponent(classNameInput.value);
+		bodyString += "&className=" + encodeURIComponent(classNameInput.value);
 	}
 	else{
 		//Might need to change "null" here...
-		bodyString += "className=" + encodeURIComponent("null");
+		bodyString += "&className=" + encodeURIComponent("null");
 	}
 
 	//Here we are trying to change the bodyString
@@ -59,21 +59,23 @@ function sendJSON(path){
 
 	}).then(function (postResponse) {
 		console.log(postResponse);
-		fetch(path, {
+		fetch(path + "/" + fileNameInput.value, {
 			method: "GET",
 			headers: {
 			}
 		}).then(function main(getResponse){
-			console.log(getResponse);
-			getResponse.json().then(function (data) {
-			fileLink = data;
+			console.log("Get Response" + getResponse);
+
+			getResponse.json().then(function (fileLink) {
+
 			console.log("Server responded from GET!");
-			console.log(data);
-			//make sure data is a link to a file.
+			console.log(fileLink);
+			
+			//make sure fileLink is a link to a file.
 			var downloadLink = document.querySelector("#downloadLink");
 			var displayLink = document.querySelector("#displayLink");
 			displayLink.style.display = "block";
-			downloadLink.setAttribute("href", data);
+			downloadLink.setAttribute("href", fileLink);
 		})
 	});
 })};

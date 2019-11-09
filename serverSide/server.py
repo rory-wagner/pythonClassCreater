@@ -34,11 +34,11 @@ class MyRequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         print("someone trying to post.")
         data, className, fileName = self.getProperFormOfData()
-        if self.path == "/python":
+        if self.path == "/python" or self.path.startswith("/python/"):
             self.createPythonFile(data, className, fileName)
             self.send201()
             self.end_headers()
-        elif self.path == "/c++":
+        elif self.path == "/c++" or self.path.startswith("/python/"):
             self.createCppFile(data, className, fileName)
             self.send201()
             self.end_headers()
@@ -77,6 +77,8 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         data = parsedBody["jsonData"][0]
         fileName = parsedBody["fileName"][0]
         className = parsedBody["className"][0]
+        print(fileName)
+        print(className)
 
         print(type(data))
         data = json.loads(data)
@@ -84,25 +86,26 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         return data, className, fileName
 
     def createPythonFile(self, data, className, fileName):
-        jsonToPython.parseTheData(data)
+        if className == "null" and fileName == "null":
+            jsonToPython.parseTheData(data)
+        else:
+            jsonToPython.parseTheData(data, className, fileName)
         return
 
     def createCppFile(self, data, className, fileName):
-        jsonToCpp.parseTheData(data, className, fileName)
+        if className == "null" and fileName == "null":
+            jsonToCpp.parseTheData(data)
+        else:
+            jsonToCpp.parseTheData(data, className, fileName)
         return
 
     def sendBackFile(self, languageName):
-        # self.send_header('Content-type', 'application/py')
-        # self.send_header('Content-Disposition', 'attachment; filename="yourClass.py"')
-        # self.end_headers()
-
-        # # not sure about this part below
-        # dataFile = open("yourClass.py", 'rb')
-        # self.wfile.write(dataFile.read())
+        parts = self.path.split("/")
+        retrieveFileName = parts[2]
 
         if languageName == "python":
 
-            filename = os.path.abspath("yourClass.py")
+            filename = os.path.abspath(retrieveFileName)
             print(filename, type(filename))
             self.wfile.write(bytes(json.dumps(filename), "utf-8"))
         # reply_body = 'Saved "%s"\n' % filename
