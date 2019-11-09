@@ -1,7 +1,7 @@
 import jsonToPyDict
 
 G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
-variableTypes= {"<class 'dict'>":"std::map<char, char>",
+variableTypes= {"<class 'dict'>":"std::unordered_map<char, char>",
 "<class 'list'>":"int",
 "<class 'str'>":"char",
 "<class 'int'>":"int",
@@ -43,7 +43,7 @@ def parseTheData(jsonObject, className = "YourClassName", filename = "yourFilena
 
 def writeTheData(className, dataMembers, initMembers, getMethods, setMethods, publics, ctypes, values, filename):
     cppFile = open(filename, "w")
-    cppFile.write("#include <map>\n")
+    cppFile.write("#include <unordered_map>\n")
     cppFile.write("class "+className+"\n")
     cppFile.write("{\nprivate:\n")
     for i in range(len(initMembers)):
@@ -67,7 +67,7 @@ def writeTheData(className, dataMembers, initMembers, getMethods, setMethods, pu
 
     valuesAll = ""
     for i in range(len(ctypes)):
-        if ctypes[i] == 'std::map<char, char>':
+        if ctypes[i] == 'std::unordered_map<char, char>':
             dic = values[i]
             setted = "{\n"
             lst = []
@@ -128,8 +128,8 @@ def createClassName():
 
 
 
-# def test():
-#     parseTheData(G_OBJECT)
-#     return
+def test():
+    parseTheData(G_OBJECT)
+    return
 
-# test()
+test()
