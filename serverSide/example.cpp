@@ -29,7 +29,7 @@ YourClassName::YourClassName()
 
 }
 
-YourClassName::YourClassName(int value,  std::map<char,char> value2, char value3, int value4, bool value5, int* value6)
+YourClassName::YourClassName(int value = 1,  std::map<char,char> value2, char value3, int value4, bool value5, int* value6)
 {
     mNum = value;
     mDictionary = value2;

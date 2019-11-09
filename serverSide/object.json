@@ -1,10 +1,10 @@
 {
     "mDictionary": {
-        "dictNumber": 42
+        "dictNumber": "42"
     },
     "mList": [0, 1, 2],
     "mString": "Hello World",
     "mNum": 65,
-    "bool" : false,
-    "null": null
+    "mBool" : false,
+    "mNull": null
 }
