@@ -5,7 +5,7 @@ G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
 def parseTheData(jsonObject):
     className = createClassName()
     initMethod = createInitMethod()
-    # populatedInitMethod = createPopulatedInit(jsonObject)
+    populatedInitMethod = createPopulatedInit(jsonObject)
     splitInitAndMethods = "\t\treturn\n\n"
     initMembers = []
     getMethods = []
@@ -17,21 +17,28 @@ def parseTheData(jsonObject):
         getMethods.append(createGetMethod(key))
         setMethods.append(createSetMethod(key))
 
-    writeTheData(className, initMethod, splitInitAndMethods, initMembers, getMethods, setMethods)
+    writeTheData(className, initMethod, splitInitAndMethods, populatedInitMethod, initMembers, getMethods, setMethods)
     return
 
-def createPopulatedInit():
-    
+def createPopulatedInit(jsonObject):
+    string = "\tdef __init__(self"
+    for key in jsonObject:
+        string += ", v" + key
+    string += "):\n"
+    for key in jsonObject:
+        string += "\t\tself." + key + " = v" + key + '\n'
     return string
 
 
-def writeTheData(className, initMethod, splitInitAndMethods, initMembers, getMethods, setMethods):
+def writeTheData(className, initMethod, splitInitAndMethods, populatedInitMethod, initMembers, getMethods, setMethods):
     pythonFile = open("yourClass.py", "w")
     pythonFile.write(className)
     pythonFile.write(initMethod)
     for i in range(len(initMembers)):
         pythonFile.write(initMembers[i])
 
+    pythonFile.write(splitInitAndMethods)
+    pythonFile.write(populatedInitMethod)
     pythonFile.write(splitInitAndMethods)
     
     for i in range(len(getMethods)):
