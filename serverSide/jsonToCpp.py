@@ -79,7 +79,7 @@ def writeTheData(className, dataMembers, initMembers, getMethods, setMethods, pu
                     setted+="\t{'"+str(t[0])+"', '"+str(t[1])+"'},\n"
                 else:
                     t = lst[j]
-                    setted+="\t{'"+str(t[0])+"', '"+str(int(t[1]))+"'}\n};"
+                    setted+="\t{'"+str(t[0])+"', '"+str(t[1])+"'}\n};"
             
         elif ctypes[i] == 'int':
             setted  = values[i]
