@@ -1,7 +1,5 @@
 import jsonToPyDict
 
-G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
-
 def parseTheData(jsonObject, classNameP = "YourClassName", filename = "yourFilename.py"):
     className = createClassName(classNameP)
     initMethod = createInitMethod()
@@ -68,8 +66,3 @@ def createSetMethod(key):
     string += "\t\tself." + key + " = value\n"
     string += "\t\treturn\n\n"
     return string
-
-# def test():
-#     parseTheData(G_OBJECT, classNameP="Testing", filename="testing.py")
-#     return
-# test()

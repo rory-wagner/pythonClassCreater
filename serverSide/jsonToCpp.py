@@ -1,6 +1,5 @@
 import jsonToPyDict
 
-G_OBJECT = jsonToPyDict.jsonToPyDict("object.json")
 variableTypes= {"<class 'dict'>":"std::unordered_map<char, char>",
 "<class 'list'>":"int",
 "<class 'str'>":"char",
@@ -125,11 +124,3 @@ def writeTheData(className, dataMembers, initMembers, getMethods, setMethods, pu
 def createClassName():
     return "YourClassName"
 
-
-
-
-def test():
-    parseTheData(G_OBJECT)
-    return
-
-test()
