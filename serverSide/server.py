@@ -66,12 +66,9 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         parsedBody = parse_qs(body)
         print("Parsed Body:", parsedBody)
         data = parsedBody["jsonData"][0]
-        print("Final form of data:", data)
-        fout = open("other.json", 'w')
-        fout.write(data)
         print(type(data))
         data = json.loads(data)
-        print(data)
+        print("Final form of data:", data)
         return data
 
     def createPythonFile(self, data):
@@ -80,6 +77,15 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 
     def createCppFile(self, data):
         jsonToCpp.parseTheData(data)
+        return
+
+    def sendBackFile(self):
+        self.send_header('Content-type', 'application/pdf')
+        self.send_header('Content-Disposition', 'attachment; filename="file.pdf"')
+        self.end_headers()
+
+        # not sure about this part below
+        self.wfile.write(open('/yourClass.py', 'rb'))
         return
 
 
