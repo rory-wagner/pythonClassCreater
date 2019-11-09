@@ -4,6 +4,7 @@ import jsonToCpp
 import jsonToPython
 import jsonToPyDict
 import json
+import os
 
 class MyRequestHandler(BaseHTTPRequestHandler):
 
@@ -81,13 +82,17 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         return
 
     def sendBackFile(self):
-        self.send_header('Content-type', 'application/py')
-        self.send_header('Content-Disposition', 'attachment; filename="yourClass.py"')
-        self.end_headers()
+        # self.send_header('Content-type', 'application/py')
+        # self.send_header('Content-Disposition', 'attachment; filename="yourClass.py"')
+        # self.end_headers()
 
-        # not sure about this part below
-        dataFile = open("yourClass.py", 'rb')
-        self.wfile.write(dataFile.read())
+        # # not sure about this part below
+        # dataFile = open("yourClass.py", 'rb')
+        # self.wfile.write(dataFile.read())
+
+        filename = os.path.basename("yourClass.py")
+        reply_body = 'Saved "%s"\n' % filename
+        self.wfile.write(reply_body.encode('utf-8'))
         return
 
 
@@ -101,3 +106,4 @@ def run():
     server.serve_forever()
 
 run()
+
